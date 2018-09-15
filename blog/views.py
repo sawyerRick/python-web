@@ -6,6 +6,7 @@ import markdown
 # Create your views here.
 def index(request):
 	articles = models.article.objects.order_by('pub_time').reverse()
+	tags = set((article.tag for article in articles))
 	few_texts = (article.content[:20] for article in articles)
 
 	return render(request, 'blog/index.html', {'zip': zip(articles, few_texts)})

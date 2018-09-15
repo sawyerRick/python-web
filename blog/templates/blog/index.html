@@ -99,7 +99,7 @@
                             </a>
                         </h2>
                         <p class="post-meta">
-                            Time:{{ article.pub_time }}<a class="post-category post-category-js" href="#">{{ article.tag }}</a>
+                            Time:{{ article.pub_time }}<a class="post-category post-category-js" href="{% url 'blog:tag_articles' article.tag %}">{{ article.tag }}</a>
                             <span class="post-count" style="float:right">{{ article.views }} 阅读</span>
                         </p>
                         <p>{{ text }}...
