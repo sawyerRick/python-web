@@ -3,14 +3,14 @@ from .forms import CommentForm
 from .models import Comment
 
 # Create your views here.
-def index(request):
+def comments(request):
 	comments = Comment.objects.all()
 	context = {
                'form': CommentForm,
                'comments': comments,
               }
 
-	return render(request, 'comments/index.html', context=context)
+	return render(request, 'comments/newComments.html', context=context)
 
 
 def post_comment(request):

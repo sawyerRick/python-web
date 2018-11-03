@@ -19,10 +19,11 @@ from django.urls import path, include
 
 urlpatterns = [
     path('admin/', admin.site.urls),
-	path('', include(('blog.urls', 'a'), namespace='blog')),
-    # django自动处理的用户urls
-    # 包括 {% url 'login' %}
     path('users/', include('django.contrib.auth.urls')),
-    path('register/', include(('users.urls', 'b'), namespace='register')),
-    path('message_board/', include(('comments.urls', 'a'), namespace='comments')),
+    # include((pattern_list, app_namespace), namespace=None)
+    # app_namespase:app名称 namespace: app实例名称
+    # 模板里调用实例: {% url 'app_name:path_name' %}
+	path('', include(('blog.urls', 'blog'), namespace='blog')),
+    path('register/', include(('users.urls', 'register'), namespace='register')),
+    path('message_board/', include(('comments.urls', 'message_board'), namespace='comments')),
 ]

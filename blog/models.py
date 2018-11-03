@@ -16,5 +16,7 @@ class article(models.Model):
 	pub_time = models.DateTimeField(auto_now=True)
 	views = models.PositiveIntegerField(default=0)
 	tag = models.CharField(max_length=20,null=True)
+	author = models.CharField(max_length=20,default="sawyer")
+	isTop = models.BooleanField(default=False)
 
 	

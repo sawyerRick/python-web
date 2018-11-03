@@ -7,9 +7,11 @@ import markdown
 def index(request):
 	articles = models.article.objects.order_by('pub_time').reverse()
 	tags = set((article.tag for article in articles))
-	few_texts = (article.content[:20] for article in articles)
+	few_texts = (article.content[:500] for article in articles)
+	#topAticle = models.article.objects.get(pk=4)
+	topArticle = models.article.objects.get(isTop=1)
 
-	return render(request, 'blog/index.html', {'zip': zip(articles, few_texts)})
+	return render(request, 'blog/index.html', {'zip': zip(articles, few_texts), 'topArticle':topArticle})
 
 def article_page(request, article_id):
 # article = models.article.objects.get(pk=article_id)
@@ -32,7 +34,6 @@ def edit_action(request):
 
 	if str(article_id) == '0':
 		article = models.article.objects.create(title=title, content=content)
-		article.tag = tag
 		article.save()
 		return redirect('/article/' + str(article.id))
 
@@ -52,8 +53,8 @@ def edit_page(request, article_id):
 		return render(request, 'blog/edit_page.html', {'article':article})
 
 
-def me(request):
-	return render(request, 'blog/me.html')
+def about(request):
+	return render(request, 'blog/about.html')
 
 def tag(request):
 	articles = models.article.objects.all()
