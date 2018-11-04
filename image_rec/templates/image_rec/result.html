@@ -1,0 +1,12 @@
+{% extends 'blog/base.html' %}
+
+{% block stuff %}
+{% if isSuccess == 1%}
+<h1> {{ pic }} {{ isSuccess }} </h1>
+<h1 class="content-subhead"></h1>
+<h1> words {{ isSuccess }} </h1>
+{% else%}
+<h1> you fuck up </h1>
+{% endif %}
+
+{% endblock %}
