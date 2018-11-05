@@ -8,10 +8,13 @@ def index(request):
 	articles = models.article.objects.order_by('pub_time').reverse()
 	tags = set((article.tag for article in articles))
 	few_texts = (article.content[:500] for article in articles)
-	#topAticle = models.article.objects.get(pk=4)
-	topArticle = models.article.objects.get(isTop=1)
-
-	return render(request, 'blog/index.html', {'zip': zip(articles, few_texts), 'topArticle':topArticle})
+	# 判断有没有置顶
+	try:
+		topArticle = models.article.objects.get(isTop=1)
+	except Exception as e:
+		return render(request, 'blog/index.html', {'zip': zip(articles, few_texts)})
+	finally:
+		return render(request, 'blog/index.html', {'zip': zip(articles, few_texts), 'topArticle':topArticle})
 
 def article_page(request, article_id):
 # article = models.article.objects.get(pk=article_id)
