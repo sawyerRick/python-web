@@ -5,6 +5,10 @@ from django.contrib.auth.models import User
 class article(models.Model):
 	def __str__(self):
 		return self.title
+	#相当于verbose_name
+	# class Meta:
+	# 	verbose_name = 'Ariticle'
+	# 	verbose_name_plural = 'Ariticles'
 
 	def increase_views(self):
 		self.views += 1

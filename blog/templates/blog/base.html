@@ -67,6 +67,9 @@
                     <li class="nav-item">
                         <a class="pure-button" href="{% url 'blog:home' %}">Game</a>
                     </li>
+                    <li class="nav-item">
+                        <a class="pure-button" href="{% url 'image_rec:home' %}">Image recognize</a>
+                    </li>
                     
                 </ul>
             </nav>
@@ -86,10 +89,7 @@
                 <p>你已登录，欢迎你: {{ user.username }}<a class="button-error pure-button" href="{% url 'logout' %}?next={{ request.path }}">注销登录</a>
                 <a class="button-warning pure-button" href="{% url 'password_change' %}?next={{ request.path }}">修改密码</a></p>
                 {% else%}
-                <button class="pure-button">
-                <a href="{% url 'login' %}?next={{ request.path }}">登录</a>
-                </button>
-                </p>
+                <p>你还没有登录, 请登录...<a class="button-secondary pure-button" href="{% url 'login' %}?next={{ request.path }}">登录</a></p>
                 {% endif %}
             </div>
             {% block stuff %}

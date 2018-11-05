@@ -17,6 +17,7 @@ Including another URLconf
 from django.contrib import admin
 from django.urls import path, include
 
+
 urlpatterns = [
     path('admin/', admin.site.urls),
     path('users/', include('django.contrib.auth.urls')),
@@ -26,4 +27,20 @@ urlpatterns = [
 	path('', include(('blog.urls', 'blog'), namespace='blog')),
     path('register/', include(('users.urls', 'register'), namespace='register')),
     path('message_board/', include(('comments.urls', 'message_board'), namespace='comments')),
+    path('image_rec/', include(('image_rec.urls', 'image_rec'), namespace='image_rec')),
 ]
+
+# Debug 模式用的处理media视图函数, 生产模式要自己配置
+# 配置处理media里的文件的路由
+# serve视图函数:https://docs.djangoproject.com/en/2.1/ref/views/
+from django.conf import settings
+from django.urls import re_path
+from django.views.static import serve
+
+
+if settings.DEBUG:
+    urlpatterns += [
+        re_path(r'^media/(?P<path>.*)$', serve, {
+            'document_root': settings.MEDIA_ROOT,
+        }),
+    ]

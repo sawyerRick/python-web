@@ -1,0 +1,28 @@
+{% extends 'blog/base.html' %}
+
+{% block stuff %}
+
+<!-- 以后尽量只看官方文档:必须加enctype="multipart/form-data" 害我找了半天bug-->
+<!-- input标签:
+  accept选择接受类型
+  type选择上传类型
+  name选择参数键
+  value是参数值 -->
+
+<div class="user-head">
+<form role="form" enctype="multipart/form-data" action="{% url 'image_rec:upload' %}" method="POST">
+
+    {% csrf_token %}
+    <h1> {{ text }} <h1>
+    <h1 class="content-subhead"></h1>
+    <img src="{{ MEDIA_URL }}{{ pic.photo }}" alt=" ">
+    <div class="user-name">
+        <input class="button-success pure-button" type="file" name="photo">
+        <button class="button-success pure-button" type="submit">转换文字</button>
+    </div>
+
+</form>
+</div>
+
+
+{% endblock %}

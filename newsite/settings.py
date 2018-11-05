@@ -40,6 +40,7 @@ INSTALLED_APPS = [
 	'blog',
     'users',
     'comments',
+    'image_rec',
 ]
 
 MIDDLEWARE = [
@@ -65,6 +66,10 @@ TEMPLATES = [
                 'django.template.context_processors.request',
                 'django.contrib.auth.context_processors.auth',
                 'django.contrib.messages.context_processors.messages',
+                # If you want to use {{ MEDIA_URL }} in your templates, add 'django.template.context_processors.media' in the 'context_processors' option of TEMPLATES.
+                # 文档:https://docs.djangoproject.com/en/2.1/ref/settings/#std:setting-MEDIA_ROOT
+                # 用{{ MEDIA_URL }}需要配置这一行,配置后{{ MEDIA_URL }}==MEDIA_URL
+                'django.template.context_processors.media',
             ],
         },
     },
@@ -120,8 +125,30 @@ USE_TZ = True
 # Static files (CSS, JavaScript, Images)
 # https://docs.djangoproject.com/en/2.1/howto/static-files/
 
+
+
+# STATIC_URL/ROOT区别  Root一般指绝对路径,Debug=False的时候才用到
+# 指定了{% static '/appname/myscript.js' %}中static位置
+# 结构 appname/static/appname/myscript.js
 STATIC_URL = '/static/'
 
 
-STATIC_ROOT = os.path.join(BASE_DIR, 'static')
+# 部署的时候才需要(debug=False)
+# STATIC_ROOT表示python manage.py collectstatic时候的指定位置
+# os.path.join(a, b)把a，b连接起来
+STATIC_ROOT = os.path.join(BASE_DIR, 'collected_static')
 
+
+# URL that handles the media served from MEDIA_ROOT, used for managing stored files. It must end in a slash if set to a non-empty value. You will need to configure these files to be served in both development and production environments.
+# MEDIA_ROOT的引用
+# {{ MEDIA_URL }} 就是这个的值(使用前需要配置TEMPLATES)
+# {{ img.file.url }} 的根目录
+MEDIA_URL = '/media/'
+
+
+# https://docs.djangoproject.com/en/2.1/ref/settings/#std:setting-MEDIA_ROOT
+# Absolute filesystem path to the directory that will hold user-uploaded files.
+# models.py中file = models.FileField(upload_to='headImg', default='thisisusersfile')
+# upload_to参数指向的是这个文件下的子目录
+# 用户上传的文件(model.object.save())根目录
+MEDIA_ROOT = os.path.join(BASE_DIR, 'media')
