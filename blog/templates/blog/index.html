@@ -8,6 +8,7 @@
 <br>
 <a class="pure-button pure-button-primary" href="{% url 'blog:edit_page' 0 %}">新文章</a>
 {% endif %}
+{% if topArticle.title %}
 <div class="posts">
     <h1 class="content-subhead">置顶</h1>
     <!-- A single blog post -->
@@ -20,6 +21,7 @@
         <p>{{ text }}...<br><h3><a href="{% url 'blog:article_page' topArticle.id %}">More</a><h3></p>
     </header>
 </div>
+{% endif %}
 <!-- A single blog post -->
 <h1 class="content-subhead">最近</h1>
 {% for article, text in zip %}

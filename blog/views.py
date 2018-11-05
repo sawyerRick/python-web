@@ -13,10 +13,9 @@ def index(request):
 		topArticle = models.article.objects.get(isTop=1)
 	except Exception as e:
 		return render(request, 'blog/index.html', {'zip': zip(articles, few_texts)})
-	finally:
-		return render(request, 'blog/index.html', {'zip': zip(articles, few_texts), 'topArticle':topArticle})
+	return render(request, 'blog/index.html', {'zip': zip(articles, few_texts), 'topArticle':topArticle})
 
-def article_page(request, article_id):
+def article_page(request, article_id=0):
 # article = models.article.objects.get(pk=article_id)
 # return render(request, 'blog/article_page.html', {'article':article})
 	article = get_object_or_404(models.article, pk=article_id)
@@ -64,7 +63,7 @@ def tag(request):
 	tags = set((article.tag for article in articles))
 	return render(request, 'blog/tag.html', {'tags': tags})
 
-def tag_articles(request, tag):
+def tag_articles(request, tag='None'):
 	articles = models.article.objects.filter(tag=tag)
 	few_texts = (article.content[:20] for article in articles)
 	return render(request, 'blog/tag_articles.html', {'zip': zip(articles, few_texts)})
